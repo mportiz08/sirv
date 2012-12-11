@@ -41,9 +41,11 @@ module Sirv
   class RackServer < Server
     def run(env)
       check_env_for_app(env)
+      
+      app = env[:application]
       with_tcp_socket do |socket|
         Thread.start(socket.accept) do |client|
-          client.print Response.new(*client.call({}))
+          client.print Response.new(*app.call({}))
           client.close
         end
       end
