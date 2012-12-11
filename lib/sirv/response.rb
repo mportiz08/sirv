@@ -2,7 +2,7 @@ require 'sirv/status'
 
 module Sirv
   class Response
-    LINE_ENDING = "\r\n"
+    EOL = "\r\n"
     
     DEFAULT_HEADERS = {
       "Server" => "Sirv"
@@ -23,7 +23,8 @@ module Sirv
     end
     
     def headers
-      @headers
+      @headers.map { |k,v| "#{k}: #{v}" }
+              .join(EOL)
     end
     
     def body
@@ -36,11 +37,8 @@ module Sirv
     
     def to_s
       resp = ''
-      
-      resp << (status + LINE_ENDING)
-      headers.each { |k,v| resp << "#{k}: #{v}#{LINE_ENDING}"}
-      resp << LINE_ENDING
-      resp << body
+      resp << [status, headers, EOL].join(EOL)
+      resp << body if body?
     end
   end
 end

@@ -6,6 +6,7 @@ module Sirv
   class Server
     def initialize(port)
       @port = port
+      Thread.abort_on_exception = true
     end
     
     def start
@@ -30,7 +31,7 @@ module Sirv
     private
     
     def handle_interrupt
-      trap('INT') { stop }
+      trap('SIGINT') { stop }
     end
   end
 end

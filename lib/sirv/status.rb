@@ -1,5 +1,7 @@
 module Sirv
   class Status
+    attr_reader :code, :msg
+    
     def initialize(code, msg)
       @code, @msg = code, msg
     end
