@@ -5,7 +5,7 @@ module Sirv
     Sirv::HelloWorldServer.new(port).run({})
   end
   
-  def run_rack_app(app, port)
+  def self.run_rack_app(app, port)
     Sirv::RackServer.new(port).run(:application => app)
   end
 end
