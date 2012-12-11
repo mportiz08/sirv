@@ -8,8 +8,8 @@ module Sirv
       "Server" => "Sirv"
     }
     
-    def initialize(body, headers={})
-      @status  = Status.new(200, "OK")
+    def initialize(status, headers, body)
+      @status  = Status.from_code(status)
       @headers = DEFAULT_HEADERS.merge(headers)
       @body    = body
     end
@@ -32,13 +32,13 @@ module Sirv
     end
     
     def body?
-      !@body.nil?
+      !@body.empty?
     end
     
     def to_s
       resp = ''
       resp << [status, headers, EOL].join(EOL)
-      resp << body if body?
+      resp << body.join("\n") if body?
     end
   end
 end

@@ -1,7 +1,11 @@
 require 'sirv/server'
 
 module Sirv
-  def self.listen(port)
-    Sirv::Server.new(port).start
+  def self.hello_world(port)
+    Sirv::HelloWorldServer.new(port).run({})
+  end
+  
+  def run_rack_app(app, port)
+    Sirv::RackServer.new(port).run(:application => app)
   end
 end

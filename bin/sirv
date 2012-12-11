@@ -2,4 +2,4 @@
 $:.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require 'sirv'
 
-Sirv.listen(3000)
+Sirv.hello_world(3000)
