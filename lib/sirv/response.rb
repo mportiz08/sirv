@@ -1,8 +1,10 @@
+require 'stringio'
+
 require 'sirv/status'
 
 module Sirv
   class Response
-    EOL = "\r\n"
+    CRLF = "\r\n"
     
     DEFAULT_HEADERS = {
       "Server" => "Sirv"
@@ -24,7 +26,7 @@ module Sirv
     
     def headers
       @headers.map { |k,v| "#{k}: #{v}" }
-              .join(EOL)
+              .join(CRLF)
     end
     
     def body
@@ -37,8 +39,12 @@ module Sirv
     
     def to_s
       resp = ''
-      resp << [status, headers, EOL].join(EOL)
+      resp << [status, headers, CRLF].join(CRLF)
       resp << body.join("\n") if body?
+    end
+    
+    def as_io
+      StringIO.new(to_s)
     end
   end
 end

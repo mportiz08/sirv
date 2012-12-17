@@ -12,6 +12,10 @@ module Helpers
     URI "http://localhost:#{test_port}"
   end
   
+  def get(uri)
+    Net::HTTP.get_response(uri)
+  end
+  
   def basic_rack_app
     ->(env) { [200, {'Content-Type' => 'text/plain'}, ['foobar']] }
   end
