@@ -14,15 +14,15 @@ describe Sirv::RackServer do
   end
   
   it 'should server a basic rack application' do
-    get(localhost).body.should eq('foobar')
+    get('/').should be_an_http_response(200, 'foobar')
   end
   
   it 'should handle multiple client connections' do
     num_clients = 8
     threads = num_clients.times.map do
-      Thread.new { get(localhost) }
+      Thread.new { get('/') }
     end
     responses = threads.map(&:value)
-    responses.each { |resp| resp.body.should eq('foobar') }
+    responses.each { |resp| resp.should be_an_http_response(200, 'foobar') }
   end
 end
